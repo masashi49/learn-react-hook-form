@@ -3,7 +3,7 @@
 // tailwindcssを使用したスタイリングでreactdomponentを囲む
 // 名前、メール、メッセージ、select、ラジオ、の各フィールドを持つお問い合わせフォームを作成
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useController, useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller } from 'react-hook-form';
 
@@ -20,9 +20,9 @@ import {
   Radio,
   RadioGroup,
   Select,
-  TextField,
   Typography,
 } from '@mui/material';
+import { RHFTextField } from './components/rhfTextField';
 
 export default function Home() {
   const [submitStatus, setSubmitStatus] = useState<
@@ -31,7 +31,6 @@ export default function Home() {
 
   // React Hook Formの初期化
   const {
-    register,
     handleSubmit,
     reset,
     control,
@@ -49,10 +48,15 @@ export default function Home() {
       radio: 'second',
     },
   });
+  const selected = useWatch({
+    control,
+    name: 'select',
+  });
 
   // 送信処理
   const onSubmit = async (data: ContactSampleFormValues) => {
     console.log('フォームデータ:', data);
+    console.log('選択された値:', selected);
     setSubmitStatus('submitting');
 
     try {
@@ -70,42 +74,14 @@ export default function Home() {
         <h1 className="text-2xl font-bold mb-4">お問い合わせフォーム</h1>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <Box className="mb-4">
-            <Typography variant="subtitle1">名前</Typography>
-            <Controller
-              name="name"
-              control={control}
-              render={({ field, fieldState }) => (
-                <>
-                  <TextField
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    {...field}
-                    error={!!fieldState.error?.message}
-                  />
-                  <p className="text-red-500">{fieldState.error?.message}</p>
-                </>
-              )}
-            />
+            <RHFTextField name="name" control={control} label="名前2" />
           </Box>
 
           <Box className="mb-4">
-            <Typography variant="subtitle1">メールアドレス</Typography>
-            <Controller
+            <RHFTextField
               name="email"
               control={control}
-              render={({ field, fieldState }) => (
-                <>
-                  <TextField
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    {...field}
-                    error={!!fieldState.error?.message}
-                  />
-                  <p className="text-red-500">{fieldState.error?.message}</p>
-                </>
-              )}
+              label="メールアドレス2"
             />
           </Box>
 
@@ -138,6 +114,13 @@ export default function Home() {
               )}
             />
           </Box>
+          {selected === 'a' && (
+            <div className="mb-4 p-2 bg-yellow-100 border border-yellow-300 rounded">
+              <Typography variant="body2" className="text-yellow-800">
+                「A」が選択されました！
+              </Typography>
+            </div>
+          )}
           <div className="mb-4">
             <Typography variant="subtitle1">radio</Typography>
             <Controller
@@ -171,25 +154,12 @@ export default function Home() {
             />
           </div>
           <div className="mb-4">
-            <Typography variant="subtitle1">お問い合わせ内容</Typography>
-            <Controller
+            <RHFTextField
               name="message"
               control={control}
-              render={({ field, fieldState }) => (
-                <>
-                  <TextField
-                    {...field}
-                    multiline
-                    rows={5}
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    sx={{ backgroundColor: 'white' }}
-                    error={!!errors.message}
-                  />
-                  <p className="text-red-500">{fieldState.error?.message}</p>
-                </>
-              )}
+              multiline
+              rows={5}
+              label="お問い合わせ内容"
             />
           </div>
           <Button
