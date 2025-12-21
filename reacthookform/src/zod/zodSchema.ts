@@ -63,7 +63,6 @@ export const contactSampleSchema = z
     if (data.select !== 'b' && !data.message) {
       ctx.addIssue({
         path: ['message'],
-        message: 'お問い合わせ内容は必須です',
         code: z.ZodIssueCode.custom,
       });
     }

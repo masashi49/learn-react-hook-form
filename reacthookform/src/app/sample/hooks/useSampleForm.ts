@@ -14,12 +14,11 @@ export function useSampleForm() {
     handleSubmit,
     control,
     reset,
-    resetField,
+
     // 初期値の型を指定
   } = useForm<ContactSampleFormValues>({
     // バリテーションスキーマの適用
     resolver: zodResolver(contactSampleSchema),
-    shouldUnregister: true,
     defaultValues: {
       // 初期値を入力
       name: '',
@@ -57,7 +56,7 @@ export function useSampleForm() {
     isSubmitting,
     isSubmitSuccessful,
     submitError,
-    resetField,
+
     control,
     errors,
     selected,

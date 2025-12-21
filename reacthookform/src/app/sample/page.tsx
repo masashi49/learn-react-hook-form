@@ -27,7 +27,6 @@ export default function Home() {
     submitError,
     isSubmitting,
     isSubmitSuccessful,
-    resetField,
   } = useSampleForm();
 
   return (
@@ -61,7 +60,6 @@ export default function Home() {
                       const value = e.target.value;
                       field.onChange(value);
                       if (value === 'b') {
-                        resetField('message');
                         console.log("'unregister resetField'");
                       }
                     }}
