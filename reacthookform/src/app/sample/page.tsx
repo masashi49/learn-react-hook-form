@@ -3,15 +3,8 @@
 // tailwindcssを使用したスタイリングでreactdomponentを囲む
 // 名前、メール、メッセージ、select、ラジオ、の各フィールドを持つお問い合わせフォームを作成
 import { useState } from 'react';
-import { useController, useForm, useWatch } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller } from 'react-hook-form';
-
-import {
-  contactSampleSchema,
-  ContactSampleFormValues,
-  SELECT_OPTIONS,
-} from '../../zod/zodSchema';
+import { ContactSampleFormValues, SELECT_OPTIONS } from '../../zod/zodSchema';
 import {
   Box,
   Button,
@@ -23,35 +16,14 @@ import {
   Typography,
 } from '@mui/material';
 import { RHFTextField } from './components/rhfTextField';
+import { useSampleForm } from './hooks/useSampleForm';
 
 export default function Home() {
   const [submitStatus, setSubmitStatus] = useState<
     'idle' | 'submitting' | 'success' | 'error'
   >('idle');
 
-  // React Hook Formの初期化
-  const {
-    handleSubmit,
-    reset,
-    control,
-    formState: { errors },
-    // 初期値の型を指定
-  } = useForm<ContactSampleFormValues>({
-    // バリテーションスキーマの適用
-    resolver: zodResolver(contactSampleSchema),
-    defaultValues: {
-      // 初期値を入力
-      name: '',
-      email: '',
-      message: '',
-      select: undefined,
-      radio: 'second',
-    },
-  });
-  const selected = useWatch({
-    control,
-    name: 'select',
-  });
+  const { handleSubmit, control, errors, selected, reset } = useSampleForm();
 
   // 送信処理
   const onSubmit = async (data: ContactSampleFormValues) => {
