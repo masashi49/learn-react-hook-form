@@ -39,7 +39,9 @@ export const contactSampleSchema = z
       .max(50, { message: 'お名前は50文字以内で入力してください' }),
     email: z
       .string()
-      .email({ message: '有効なメールアドレスを入力してください' }),
+      .email({ message: '有効なメールアドレスを入力してください' })
+      .optional()
+      .or(z.literal('')),
     message: z
       .string()
       .min(10, { message: 'お問い合わせ内容は10文字以上で入力してください' })

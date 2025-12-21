@@ -2,9 +2,9 @@
 
 // tailwindcssを使用したスタイリングでreactdomponentを囲む
 // 名前、メール、メッセージ、select、ラジオ、の各フィールドを持つお問い合わせフォームを作成
-import { useState } from 'react';
+
 import { Controller } from 'react-hook-form';
-import { ContactSampleFormValues, SELECT_OPTIONS } from '../../zod/zodSchema';
+import { SELECT_OPTIONS } from '../../zod/zodSchema';
 import {
   Box,
   Button,
@@ -19,32 +19,21 @@ import { RHFTextField } from './components/rhfTextField';
 import { useSampleForm } from './hooks/useSampleForm';
 
 export default function Home() {
-  const [submitStatus, setSubmitStatus] = useState<
-    'idle' | 'submitting' | 'success' | 'error'
-  >('idle');
-
-  const { handleSubmit, control, errors, selected, reset } = useSampleForm();
-
-  // 送信処理
-  const onSubmit = async (data: ContactSampleFormValues) => {
-    console.log('フォームデータ:', data);
-    console.log('選択された値:', selected);
-    setSubmitStatus('submitting');
-
-    try {
-      // API呼び出し処理...
-      setSubmitStatus('success');
-      reset(); // フォームリセット
-    } catch (error) {
-      setSubmitStatus('error');
-    }
-  };
+  const {
+    control,
+    errors,
+    selected,
+    onSubmit,
+    submitError,
+    isSubmitting,
+    isSubmitSuccessful,
+  } = useSampleForm();
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
       <div className="bg-white p-6 rounded shadow-md w-full max-w-md">
         <h1 className="text-2xl font-bold mb-4">お問い合わせフォーム</h1>
-        <form onSubmit={handleSubmit(onSubmit)} noValidate>
+        <form onSubmit={onSubmit} noValidate>
           <Box className="mb-4">
             <RHFTextField name="name" control={control} label="名前2" />
           </Box>
@@ -137,16 +126,16 @@ export default function Home() {
           <Button
             type="submit"
             className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition"
-            disabled={submitStatus === 'submitting'}
+            disabled={isSubmitting}
           >
-            {submitStatus === 'submitting' ? '送信中...' : '送信'}
+            {isSubmitting ? '送信中...' : '送信'}
           </Button>
-          {submitStatus === 'success' && (
+          {isSubmitSuccessful && !submitError && (
             <p className="text-green-500 text-center mt-4">
               送信が成功しました！
             </p>
           )}
-          {submitStatus === 'error' && (
+          {submitError === 'error' && (
             <p className="text-red-500 text-center mt-4">
               送信中にエラーが発生しました。もう一度お試しください。
             </p>
