@@ -47,19 +47,26 @@ export const contactSampleSchema = z
       .min(10, { message: 'お問い合わせ内容は10文字以上で入力してください' })
       .max(1000, {
         message: 'お問い合わせ内容は1000文字以内で入力してください',
-      }),
-    // セレクトボックスのバリデーション追加
+      })
+      .optional(),
     select: z.enum(SELECT_VALUES, {
       message: '選択してください',
     }),
-
-    // ラジオボタンのバリデーション追加
     radio: z.enum(['first', 'second', 'third'], {
       message: 'ラジオボタンの選択肢を選んでください',
     }),
   })
   .required({
     name: true,
+  })
+  .superRefine((data, ctx) => {
+    if (data.select !== 'b' && !data.message) {
+      ctx.addIssue({
+        path: ['message'],
+        message: 'お問い合わせ内容は必須です',
+        code: z.ZodIssueCode.custom,
+      });
+    }
   });
 
 // 型定義のエクスポート

@@ -27,6 +27,7 @@ export default function Home() {
     submitError,
     isSubmitting,
     isSubmitSuccessful,
+    resetField,
   } = useSampleForm();
 
   return (
@@ -56,7 +57,14 @@ export default function Home() {
                   <Select
                     {...field}
                     value={field.value ?? ''}
-                    onChange={(e) => field.onChange(e.target.value)}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      field.onChange(value);
+                      if (value === 'b') {
+                        resetField('message');
+                        console.log("'unregister resetField'");
+                      }
+                    }}
                     className={`w-full p-2 border rounded ${
                       errors.select ? 'border-red-500' : 'border-gray-300'
                     }`}
@@ -114,15 +122,17 @@ export default function Home() {
               )}
             />
           </div>
-          <div className="mb-4">
-            <RHFTextField
-              name="message"
-              control={control}
-              multiline
-              rows={5}
-              label="お問い合わせ内容"
-            />
-          </div>
+          {selected !== 'b' && (
+            <div className="mb-4">
+              <RHFTextField
+                name="message"
+                control={control}
+                multiline
+                rows={5}
+                label="お問い合わせ内容"
+              />
+            </div>
+          )}
           <Button
             type="submit"
             className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition"
@@ -141,6 +151,8 @@ export default function Home() {
             </p>
           )}
         </form>
+
+        {errors.root && <p>{errors.root.message}</p>}
       </div>
     </div>
   );
