@@ -1,1 +1,5 @@
-npx lint-staged
+#!/bin/sh
+echo "🔍 eslint prettierを起動します"
+npm lint-staged
+
+echo "🔍 eslint prettierによる自動整形が完了しました。"

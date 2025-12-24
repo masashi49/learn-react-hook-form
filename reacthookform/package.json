@@ -7,13 +7,13 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "prepare": "husky",
-    "fix:lint": "eslint --fix"
+    "prepare": "husky install",
+    "prebuild": "eslint 'src/**/*.{ts,tsx,js,jsx}' --fix"
   },
   "lint-staged": {
-    "*.{ts,tsx,json,css,scss}": [
-      "prettier --write",
-      "next lint --fix --dir src"
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
     ]
   },
   "dependencies": {
