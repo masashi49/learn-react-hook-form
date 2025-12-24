@@ -10,10 +10,9 @@
     "prepare": "husky"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "eslint -c .eslintrc.js --fix",
-      "prettier --write '**/*.{js,jsx,ts,tsx,json}'",
-      "cspell"
+    "src/**/*.{ts,tsx,json,css,scss}": [
+      "prettier --write",
+      "next lint --fix --dir src"
     ]
   },
   "dependencies": {
