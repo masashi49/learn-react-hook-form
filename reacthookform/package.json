@@ -7,10 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "prepare": "husky"
+    "prepare": "husky",
+    "fix:lint": "eslint --fix"
   },
   "lint-staged": {
-    "src/**/*.{ts,tsx,json,css,scss}": [
+    "*.{ts,tsx,json,css,scss}": [
       "prettier --write",
       "next lint --fix --dir src"
     ]
