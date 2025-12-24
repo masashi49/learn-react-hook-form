@@ -16,7 +16,7 @@ import {
   Typography,
 } from '@mui/material';
 import { RHFTextField } from './components/rhfTextField';
-import { navigation } from './components/Navigation';
+import { navigationあ } from './components/Navigation';
 
 import { useSampleForm } from './hooks/useSampleForm';
 

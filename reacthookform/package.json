@@ -9,6 +9,13 @@
     "lint": "eslint",
     "prepare": "husky"
   },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint -c .eslintrc.js --fix",
+      "prettier --write '**/*.{js,jsx,ts,tsx,json}'",
+      "cspell"
+    ]
+  },
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
@@ -29,6 +36,7 @@
     "eslint-config-next": "16.0.10",
     "eslint-plugin-unused-imports": "^4.3.0",
     "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
     "prettier": "^3.7.4",
     "tailwindcss": "^4",
     "typescript": "^5"
