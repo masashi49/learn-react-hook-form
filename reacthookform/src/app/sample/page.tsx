@@ -16,6 +16,7 @@ import {
   Typography,
 } from '@mui/material';
 import { RHFTextField } from './components/rhfTextField';
+import { navigation } from './components/Navigation';
 
 import { useSampleForm } from './hooks/useSampleForm';
 
@@ -153,6 +154,7 @@ export default function Home() {
 
         {errors.root && <p>{errors.root.message}</p>}
       </div>
+      <navigation />
     </div>
   );
 }
