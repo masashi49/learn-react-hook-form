@@ -48,6 +48,7 @@ export function useSampleForm() {
       reset(); // フォームリセット
     } catch (error) {
       setSubmitError('error');
+      console.error('送信エラー:', error);
     }
   });
 

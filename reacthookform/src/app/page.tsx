@@ -36,6 +36,7 @@ export default function Home() {
       reset(); // フォームリセット
     } catch (error) {
       setSubmitStatus('error');
+      console.error('送信エラー:', error);
     }
   };
 
