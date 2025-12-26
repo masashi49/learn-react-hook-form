@@ -2,4 +2,5 @@
 set -e
 
 echo "🔥 pre-commit running"
+cd reacthookform
 npm run lint
