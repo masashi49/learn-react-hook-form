@@ -1,5 +1,5 @@
 #!/bin/sh
-echo "🔍 eslint prettierを起動します"
-npm lint-staged
+set -e
 
-echo "🔍 eslint prettierによる自動整形が完了しました。"
+echo "🔥 pre-commit running"
+npm run lint
