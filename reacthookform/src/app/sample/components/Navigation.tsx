@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 const Links = ['Home', 'About', 'Contact'];
 
-export function Navigation() {
+export const Navigation = () => {
   return (
     <nav>
       <ul className="flex space-x-4 bg-blue-600 p-4">
@@ -18,4 +18,4 @@ export function Navigation() {
       </ul>
     </nav>
   );
-}
+};
